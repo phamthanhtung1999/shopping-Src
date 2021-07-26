@@ -3,9 +3,11 @@ import mongooseDelete from "mongoose-delete";
 
 const Schema = mongoose.Schema;
 
-const categorySchema = Schema(
+const adminSchema = Schema(
   {
-    name: { type: String, maxLength: 255, required: true },
+    username: { type: String, maxLength: 32, required: true, unique: true },
+    password: { type: String, maxLength: 255, required: true },
+    email: { type: String }
   },
   {
     timestamps: true,
@@ -19,11 +21,11 @@ const categorySchema = Schema(
 );
 
 // Add plugin
-categorySchema.plugin(mongooseDelete, {
+adminSchema.plugin(mongooseDelete, {
   deletedAt: true,
   overrideMethods: true,
 });
 
-const Category = mongoose.model("Category", categorySchema);
+const Admin = mongoose.model("Admin", adminSchema);
 
-export default Category;
+export default Admin;

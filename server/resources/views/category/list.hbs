@@ -1,0 +1,35 @@
+<div
+  class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 class="h2">Categories</h1>
+  <a
+    href="/categories/new"
+    class="btn btn-sm btn-outline-primary"
+  >Create new</a>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th scope="col" class="px-3 py-2">#</th>
+        <th scope="col" class="px-3 py-2">Name</th>
+        <th scope="col" class="px-3 py-2">Created At</th>
+        <th scope="col" class="px-3 py-2">Updated At</th>
+        <th scope="col" class="px-3 py-2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each categories}}
+      <tr>
+        <td class="px-3 py-2">{{ sum @index 1 }}</td>
+        <td class="px-3 py-2">{{ this.name }}</td>
+        <td class="px-3 py-2">{{ this.createdAt }}</td>
+        <td class="px-3 py-2">{{ this.updatedAt }}</td>
+        <td class="px-3 py-2">
+          <a href="/categories/{{this._id}}/edit" class="btn btn-secondary">Edit</a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

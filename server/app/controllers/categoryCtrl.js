@@ -1,8 +1,8 @@
-import Category from "../models/Category.js";
+import { getAll } from "../repositories/categoryRepo.js";
 
-export const getAll = async (req, res) => {
+export const getAllCategory = async (req, res) => {
     try {
-        const categories = await Category.find();
+        const categories = await getAll();
 
         res.status(200).json(categories);
     } catch (error) {
