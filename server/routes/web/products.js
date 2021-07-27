@@ -1,17 +1,17 @@
 import express from "express";
+import { create, index, store, edit, update } from "../../app/controllers/admin/productCtrl.js";
+import upload from "../../app/middlewares/uploadMiddleware.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.render('product/list');
-});
+router.get("/", index);
 
-router.get("/new", (req, res) => {
-    res.render('product/create');
-});
+router.get("/new", create);
 
-router.get("/:id/edit", (req, res) => {
-    res.render('product/edit');
-});
+router.post("/", upload.single('image'), store);
+
+router.get("/:id/edit", edit);
+
+router.post("/:id/edit", update);
 
 export default router;

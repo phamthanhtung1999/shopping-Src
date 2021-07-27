@@ -1,20 +1,16 @@
 import express from "express";
-import { getAll } from "../../app/repositories/categoryRepo.js";
-import { multipleMongooseToObj } from "../../app/helpers/mongooseHelper.js";
+import { index, create, edit, store, update } from "../../app/controllers/admin/categoryCtrl.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-    const data = multipleMongooseToObj(await getAll());
-    res.render('category/list', { categories: data });
-});
+router.get("/", index);
 
-router.get("/new", (req, res) => {
-    res.render('category/create');
-});
+router.get("/new", create);
 
-router.get("/:id/edit", (req, res) => {
-    res.render('category/edit');
-});
+router.post("/", store);
+
+router.get("/:id/edit", edit);
+
+router.post("/:id/edit", update);
 
 export default router;

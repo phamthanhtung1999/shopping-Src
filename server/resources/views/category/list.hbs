@@ -23,8 +23,8 @@
       <tr>
         <td class="px-3 py-2">{{ sum @index 1 }}</td>
         <td class="px-3 py-2">{{ this.name }}</td>
-        <td class="px-3 py-2">{{ this.createdAt }}</td>
-        <td class="px-3 py-2">{{ this.updatedAt }}</td>
+        <td class="px-3 py-2">{{ datetimeFormat this.createdAt 'YYYY-MM-DD HH:mm:ss' }}</td>
+        <td class="px-3 py-2">{{ datetimeFormat this.updatedAt 'YYYY-MM-DD HH:mm:ss' }}</td>
         <td class="px-3 py-2">
           <a href="/categories/{{this._id}}/edit" class="btn btn-secondary">Edit</a>
         </td>

@@ -1,8 +1,6 @@
 import express from "express";
-import { login, logout } from "../../app/controllers/authCtrl.js";
+import { login, logout } from "../../app/controllers/admin/authCtrl.js";
 import { redirectHome, restrict } from "../../app/middlewares/auth.js";
-import Admin from "../../app/models/Admin.js";
-import bcrypt from "bcrypt";
 
 const router = express.Router();
 

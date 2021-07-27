@@ -7,4 +7,15 @@
     class="btn btn-sm btn-outline-secondary"
   >Back to list</a>
 </div>
-<div>New category input</div>
+<div class="container">
+  <form action="/categories" method="post">
+    <div class="form-group mb-4">
+      <div>Name</div>
+      <input type="text" name="name" required maxlength="32" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Add</button>
+    </div>
+  </form>
+</div>

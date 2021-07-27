@@ -7,4 +7,16 @@
     class="btn btn-sm btn-outline-secondary"
   >Back to list</a>
 </div>
-<div>Edit category input</div>
+<div class="container">
+  <div>Id: {{ model._id }}</div>
+  <form action="/categories/{{model._id}}/edit" method="post">
+    <div class="form-group mb-4">
+      <div>Name</div>
+      <input type="text" name="name" value="{{model.name}}" required maxlength="32" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+  </form>
+</div>

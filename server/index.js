@@ -2,13 +2,11 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import multer from "multer";
 import hbs from "express-handlebars";
 import path from "path";
 import session from "express-session";
 import MongoStore from "connect-mongo";
-
-var upload = multer();
+import moment from "moment";
 
 import routes from "./routes/index.js";
 import { mapAdmin } from "./app/middlewares/auth.js";
@@ -49,9 +47,6 @@ app.use(session({
 // use cors
 app.use(cors());
 
-// parse multipart/form-data
-app.use(upload.array());
-
 // static folder
 app.use(express.static('public'));
 
@@ -60,6 +55,10 @@ app.engine('hbs', hbs({
   extname: '.hbs',
   helpers: {
     sum: (a, b) => a + b,
+    datetimeFormat: (datetime, format) => moment(datetime).format(format),
+    currency: (number) => new Intl.NumberFormat().format(number),
+    equal: (a, b) =>  a.equals(b),
+    concat: (a, b) => a + ' ' + b,
   }
 }));
 app.set('view engine', 'hbs');

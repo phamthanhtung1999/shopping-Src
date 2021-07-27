@@ -1,30 +1,62 @@
-import { authenticate } from "../repositories/authRepo.js";
+import { APP_KEY } from "../../config/app.js";
+import { generateToken } from "../helpers/tokenHelper.js";
+import User from "../models/User.js";
+import { authenticate } from "../repositories/userRepo.js";
+import bcrypt from "bcrypt";
 
 export const login = async (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     try {
-        const admin = await authenticate(username, password);
+        const user = await authenticate(email, password);
 
-        if (admin) {
-            req.session.userId = admin._id;            
-            res.redirect('/');
+        if (user) {
+            const token = generateToken(user.email);
+            const { email, firstName, lastName, phone, address } = user;
+            res.json({
+                user: { email, firstName, lastName, phone, address },
+                token: token
+            });
         } else {
-            req.session.error = "Wrong username or password!";
+            res.status(400).json({ message: "Wrong email or password!" });
         }
     } catch (error) {
-        req.session.error = "Something went wrong. Please try again later...";
+        res.status(400).json({ message: error.message });
+    }
+}
+
+export const register = async (req, res) => {
+    const data = req.body
+
+    data.password = await bcrypt.hash(data.password, 10);
+
+    const user = new User(data);
+
+    try {
+        user.save((error) => {
+            if (error) {
+                const errorArray = error.errors;
+                let message = "";
+                for (const field in errorArray) {
+                    message += errorArray[field].message + '\n';
+                }
+                res.status(400).json({ message: message || "Email has been registered" });
+            } else {
+                const token = generateToken(user.email);
+                const { email, firstName, lastName, phone, address } = user;
+                res.json({
+                    user: { email, firstName, lastName, phone, address },
+                    token: token
+                });
+            }
+        });        
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
 }
 
 export const logout = (req, res) => {
-    const { SESS_NAME = 'sid' } = process.env;
-    req.session.destroy(err => {
-        if (err) {
-            return res.redirect('/');
-        }
+    // expire token
 
-        res.clearCookie(SESS_NAME);
-        res.redirect('/login');
-    });
+    res.status(203);
 }

@@ -1,10 +1,51 @@
 <div
   class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
 >
-  <h1 class="h2">New Category</h1>
+  <h1 class="h2">New Product</h1>
   <a
-    href="/categories"
+    href="/products"
     class="btn btn-sm btn-outline-secondary"
   >Back to list</a>
 </div>
-<div>New category input</div>
+<div class="container">
+  <form action="/products" method="post" enctype="multipart/form-data">
+    <div class="form-group mb-4">
+      <div>Name</div>
+      <input type="text" name="name" required maxlength="32" class="form-control">
+    </div>
+
+    <div class="form-group mb-4">
+      <div>Description</div>
+      <textarea name="description" required class="form-control"></textarea>
+    </div>
+
+    <div class="form-group mb-4 row">
+      <div class="col">
+        <div>Unit Price</div>
+        <input type="number" name="unitPrice" required class="form-control">
+      </div>
+      <div class="col">
+        <div>Stock</div>
+        <input type="number" name="stock" required min="1" max="100" class="form-control">
+      </div>      
+    </div>
+
+    <div class="form-group mb-4">
+      <div>Image</div>
+      <input type="file" name="image" accept="image/png, image/jpeg" class="form-control">
+    </div>
+
+    <div class="form-group mb-4">
+      <div>Category</div>
+      <select class="form-control" name="category" required>
+        {{#each categories}}
+        <option value="{{ this._id }}">{{ this.name }}</option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Add</button>
+    </div>
+  </form>
+</div>
