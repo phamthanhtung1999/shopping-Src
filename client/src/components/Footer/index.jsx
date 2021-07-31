@@ -12,7 +12,7 @@ function Footer(props) {
       <Container>
         <Grid Container>
           <Grid item style={{ textAlign: "center" }}>
-            <Typography variant='h4' style={{ fontWeight: 'bold', color: 'white' }} > {`MALU SHOP`}</Typography>
+            <Typography variant='h4' style={{ fontWeight: 'bold', color: 'white' }} > {`Shopping`}</Typography>
           </Grid>
           <Box className='footer__list'>
             <Grid item className="footer__item">

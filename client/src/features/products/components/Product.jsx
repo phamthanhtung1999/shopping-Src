@@ -8,7 +8,6 @@ Product.propTypes = {
 };
 
 function Product({ product }) {
-  console.log(product);
   const thumbnailUrl = product.imagePath ? `${STATIC_HOST}${product.imagePath}` : `${THUMBNAIL_PLAYHOLDER}`;
   return (
     <Box padding={1}>
