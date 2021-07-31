@@ -1,17 +1,28 @@
 import axiosClient from "./axiosClient";
 
 const userApi = {
-  register(data) {
-    const url = 'user/register';
+  async register(data) {
+    const url = 'users/register';
+    // return axiosClient.post(url, data)
+    try {
+      const res = await axiosClient.post(url, data)
+      return res.data
+    } catch (error) {
+      return error.response
+    }
+  },
+  async login(data) {
+    const url = 'users/login';
+    try {
+      const res = await axiosClient.post(url, data)
+      return res.data
+    } catch (error) {
+      return { ...error.response.data, error: true }
+    }
+  },
+  async logout(data) {
+    const url = 'users/logout';
     return axiosClient.post(url, data)
   },
-  login(data) {
-    const url = 'user/login';
-    return axiosClient.post(url, data)
-  },
-  logout(data) {
-    const url = 'user/logout';
-    return axiosClient.post(url, data)
-  }
 }
 export default userApi

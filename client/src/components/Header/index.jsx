@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { ShoppingCart } from '../../../node_modules/@material-ui/icons/index';
 import DialogMigrate from 'components/DialogMigrate/index';
+import { logout } from 'features/Auth/userSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,8 +42,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AppHeader() {
   const loggedInUser = useSelector(state => state.user.current)
-  console.log(loggedInUser);
-  // const isLoggedIn = !!loggedInUser.email;
+  const isLoggedIn = !!loggedInUser.email;
+  console.log(isLoggedIn);
   const [open, setOpen] = React.useState(false);
   // const [mode, setMode] = useState(MODE.LOGIN);
   const [mode, setMode] = useState("login");
@@ -63,12 +64,12 @@ export default function AppHeader() {
   const handleCloseMenu = () => {
     setAnchorEl(null);
   }
-  // const handleLogOut = () => {
-  //   // const remove = setNullCartItem();
-  //   // dispatch(remove);
-  //   const action = logout();
-  //   dispatch(action);
-  // }
+  const handleLogOut = () => {
+    // const remove = setNullCartItem();
+    // dispatch(remove);
+    const action = logout();
+    dispatch(action);
+  }
   const classes = useStyles();
   // const handleShoppingCartClick = () => {
   //   if (isLoggedIn) {
@@ -91,13 +92,6 @@ export default function AppHeader() {
               Shopping
             </Typography>
           </Typography>
-          {
-            // !isLoggedIn && 
-            (
-              <Button color="inherit" onClick={handleClickOpen}>
-                Login
-              </Button>
-            )}
           <Box>
             <Button className={classes.home} onClick={handleHomeClick}>Sản Phẩm</Button>
           </Box>
@@ -110,13 +104,24 @@ export default function AppHeader() {
               />
             </Badge>
           </IconButton>
-          {
-            // isLoggedIn && 
-            (
-              <Button color="inherit" onClick={handleUserClick}>
-                <AccountCircle />
-              </Button>
-            )}
+          {isLoggedIn === false ? (
+            <Button color="inherit" onClick={handleClickOpen}>
+              Login
+            </Button>) : (
+            <Button color="inherit" onClick={handleUserClick}>
+              <AccountCircle />
+            </Button>
+          )}
+          {/* {!isLoggedIn && (
+            <Button color="inherit" onClick={handleClickOpen}>
+              Login
+            </Button>
+          )}
+          {isLoggedIn && (
+            <Button color="inherit" onClick={handleUserClick}>
+              <AccountCircle />
+            </Button>
+          )} */}
         </Toolbar>
       </AppBar>
 
@@ -137,7 +142,7 @@ export default function AppHeader() {
         onClose={handleCloseMenu}
       >
         <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
-        {/* <MenuItem onClick={handleLogOut}>Logout</MenuItem> */}
+        <MenuItem onClick={handleLogOut}>Logout</MenuItem>
       </Menu>
 
       <DialogMigrate

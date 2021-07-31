@@ -40,11 +40,11 @@ function RegisterForm(props) {
   const classes = useStyles();
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
   const schema = yup.object().shape({
-    firstname: yup
+    firstName: yup
       .string()
       .required('Please! Enter your FirstName.')
       .max(32, 'FirstName cannot be more than 32 characters.'),
-    lastname: yup
+    lastName: yup
       .string()
       .required('Please! Enter your LastName.')
       .max(32, 'LastName cannot be more than 32 characters.'),
@@ -72,8 +72,8 @@ function RegisterForm(props) {
 
   const form = useForm({
     defaultValues: {
-      firstname: '',
-      lastname: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       retypepassword: '',
@@ -98,8 +98,8 @@ function RegisterForm(props) {
         Register
       </Typography>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
-        <InputField name="firstname" label="FirstName" form={form} />
-        <InputField name="lastname" label="LastName" form={form} />
+        <InputField name="firstName" label="FirstName" form={form} />
+        <InputField name="lastName" label="LastName" form={form} />
         <InputField name="email" label="Email" form={form} />
         <PasswordField name="password" label="Password" form={form} />
         <PasswordField name="retypepassword" label="RetypePassword" form={form} />

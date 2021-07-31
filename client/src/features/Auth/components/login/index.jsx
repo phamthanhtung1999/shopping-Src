@@ -7,19 +7,22 @@ import { unwrapResult } from '../../../../../node_modules/@reduxjs/toolkit/';
 import { useSnackbar } from '../../../../../node_modules/notistack/dist/index';
 
 Login.propTypes = {
-
+  closeDialog: PropTypes.func,
 };
 function Login(props) {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const handleSubmit = async (values) => {
-    try {
-      const action = login(values);
-      const resultAction = await dispatch(action);
-      unwrapResult(resultAction);
-    } catch (error) {
-      console.log('fail to login', error);
-      enqueueSnackbar(error.message, { variant: "error" })
+    const action = login(values);
+    const resultAction = await dispatch(action);
+    const data = unwrapResult(resultAction);
+    if (data.error) {
+      enqueueSnackbar(data.message, { variant: "error" })
+    }
+    //close dialog
+    const { closeDialog } = props;
+    if (closeDialog) {
+      closeDialog();
     }
   }
   return (

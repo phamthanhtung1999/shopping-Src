@@ -7,10 +7,13 @@ export const register = createAsyncThunk(
   async (payload) => {
     // call api to register
     const data = await userApi.register(payload);
+    if (data.error) {
+      return data
+    }
     // luu vao localstorage
     localStorage.setItem(StorageKeys.TOKEN, data.token);
     localStorage.setItem(StorageKeys.USER, JSON.stringify(data.user));
-    return data.user;
+    return true;
   }
 )
 export const login = createAsyncThunk(
@@ -18,10 +21,13 @@ export const login = createAsyncThunk(
   async (payload) => {
     // call api to register
     const data = await userApi.login(payload);
+    if (data.error) {
+      return data
+    }
     // luu vao localstorage
     localStorage.setItem(StorageKeys.TOKEN, data.token);
     localStorage.setItem(StorageKeys.USER, JSON.stringify(data.user));
-    return data.user;
+    return true;
   }
 )
 const userSlice = createSlice({
@@ -31,9 +37,13 @@ const userSlice = createSlice({
     settings: {},
   },
   reducers: {
+    logout(state) {
+      localStorage.removeItem(StorageKeys.USER);
+      localStorage.removeItem(StorageKeys.TOKEN);
+      state.current = {}
+    }
   },
   extraReducers: {
-
     [register.fulfilled]: (state, action) => {
       state.current = action.payload;
     },
