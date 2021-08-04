@@ -22,9 +22,9 @@ const productApi = {
     }
   },
 
-  get(id) {
-    const url = `/products/:${id}`;
-    return axiosClient.post(url);
+  async get(slug) {
+    const url = `/products/${slug}`;
+    return axiosClient.get(url);
   },
   update(id, data) {
     const url = `/products/${id}`;

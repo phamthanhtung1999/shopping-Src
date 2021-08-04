@@ -22,7 +22,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     maxWidth: "200px"
   }
-
 }))
 function QuantityField(props) {
   const classes = useStyles();
@@ -55,7 +54,6 @@ function QuantityField(props) {
               onChange={onChange}
               onBlur={onBlur}
             />
-
             <IconButton onClick={() => setValue(name, Number.parseInt(value) ? Number.parseInt(value) + 1 : 1)}>
               <AddCircleOutline />
             </IconButton>

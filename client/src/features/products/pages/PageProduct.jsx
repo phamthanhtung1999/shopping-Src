@@ -1,8 +1,11 @@
 import { Box, Container, Grid, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import { useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import productApi from '../../../api/productApi';
 import CarouselIn from '../../../components/Carousel';
 import ProductList from '../components/ProductList';
+import queryString from 'query-string'
 
 
 PageProduct.propTypes = {
@@ -23,15 +26,21 @@ function PageProduct(props) {
   const [productList, setProductList] = useState([]);
   const [pagination, setPagination] = useState();
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState({
-    page: 1,
-  })
+  const location = useLocation();
+  const queryParams = useMemo(() => {
+    const params = queryString.parse(location.search)
+    return {
+      ...params,
+      page: Number.parseInt(params.page) || 1,
+    }
+  }, [location.search])
+
 
   useEffect(() => {
     (
       async () => {
         try {
-          const { data, pagination } = await productApi.getAll(filter)
+          const { data, pagination } = await productApi.getAll(queryParams)
           setProductList(data.data.docs);
           setPagination(pagination);
         } catch (error) {
@@ -40,14 +49,17 @@ function PageProduct(props) {
         setLoading(false);
       }
     )(console.log("productList", productList));
-  }, [filter])
+  }, [queryParams])
+
+
   return (
     <Box>
       <Container>
         <CarouselIn />
         <Grid container>
           <Grid container item className={classes.left}>left</Grid>
-          <Grid container item className={classes.right}>oc cho
+          <Grid container item className={classes.right}>
+            oc cho
             <ProductList productList={productList} />
           </Grid>
         </Grid>

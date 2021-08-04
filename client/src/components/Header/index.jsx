@@ -11,6 +11,7 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import { ShoppingCart } from '../../../node_modules/@material-ui/icons/index';
 import DialogMigrate from 'components/DialogMigrate/index';
 import { logout } from 'features/Auth/userSlice';
+import { cartItemCountSelector } from 'features/Cart/Selector';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,15 +44,13 @@ const useStyles = makeStyles((theme) => ({
 export default function AppHeader() {
   const loggedInUser = useSelector(state => state.user.current)
   const isLoggedIn = !!loggedInUser.email;
-  console.log(isLoggedIn);
   const [open, setOpen] = React.useState(false);
-  // const [mode, setMode] = useState(MODE.LOGIN);
   const [mode, setMode] = useState("login");
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
   const url = useRouteMatch();
   const history = useHistory();
-
+  const cartItemCount = useSelector(cartItemCountSelector)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -97,7 +96,7 @@ export default function AppHeader() {
           </Box>
           <IconButton aria-label="show 4 new mails" color="inherit">
             <Badge
-              // badgeContent={cartItemCount} 
+              badgeContent={cartItemCount}
               color="secondary">
               <ShoppingCart
               // onClick={handleShoppingCartClick} 
@@ -112,16 +111,6 @@ export default function AppHeader() {
               <AccountCircle />
             </Button>
           )}
-          {/* {!isLoggedIn && (
-            <Button color="inherit" onClick={handleClickOpen}>
-              Login
-            </Button>
-          )}
-          {isLoggedIn && (
-            <Button color="inherit" onClick={handleUserClick}>
-              <AccountCircle />
-            </Button>
-          )} */}
         </Toolbar>
       </AppBar>
 
