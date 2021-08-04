@@ -43,3 +43,12 @@ export const deleteCategoryById = async (id) => {
         return false;
     }
 }
+
+export const searchCategoryByName = async (keyword) => {
+    try {
+        const categories = await Category.find({ name: { $regex: new RegExp(keyword, 'i')} });
+        return categories;
+    } catch (error) {
+        return null
+    }
+}

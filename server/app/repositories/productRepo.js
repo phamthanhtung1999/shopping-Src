@@ -41,10 +41,37 @@ export const getProductById = async (id) => {
 
 export const updateProduct = async (id, data) => {
     try {
-        const model = await Product.findByIdAndUpdate(id, data);
+        const model = await Product.updateOne({_id: id}, data);
 
         return model;
     } catch (error) {
         return { error: true, message: error.message };
     }
+}
+
+export const getProductBySlug = async (slug) => {
+    const product = await Product
+        .findOne({ slug: slug })
+        .populate({ path: 'category', select: 'name' })
+        .select(['name', 'description', 'stock', 'imagePath', 'unitPrice', 'slug']);
+
+    return product
+}
+
+export const getPaginatedList = async (page, condition) => {
+    const query = {
+        deleted: false
+    }
+
+    Object.assign(query, condition);
+
+    const options = {
+        page: page,
+        limit: 50,
+        select: ['name', 'stock', 'imagePath', 'unitPrice', 'slug']
+    };
+
+    const products = await Product.paginate(query, options);
+
+    return products;
 }
