@@ -37,7 +37,6 @@ function AddToCartForm({ onSubmit = null }) {
         <Button
           type="submit"
           variant="contained"
-          color="#303030"
           style={{ width: "250px" }}
           size="large"
         >

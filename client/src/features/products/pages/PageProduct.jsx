@@ -1,11 +1,12 @@
 import { Box, Container, Grid, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import productApi from '../../../api/productApi';
 import CarouselIn from '../../../components/Carousel';
 import ProductList from '../components/ProductList';
 import queryString from 'query-string'
+import ProductFilter from '../components/ProductFilter';
 
 
 PageProduct.propTypes = {
@@ -17,6 +18,7 @@ const useStyle = makeStyles((theme) => ({
   },
   right: {
     flex: "1 1 0",
+
   },
 
 }))
@@ -24,17 +26,23 @@ const useStyle = makeStyles((theme) => ({
 function PageProduct(props) {
   const classes = useStyle();
   const [productList, setProductList] = useState([]);
-  const [pagination, setPagination] = useState();
   const [loading, setLoading] = useState(true);
   const location = useLocation();
+  const history = useHistory();
+  const [pagination, setPagination] = useState({
+    limit: 30,
+    page: 1,
+  });
   const queryParams = useMemo(() => {
     const params = queryString.parse(location.search)
+
     return {
       ...params,
-      page: Number.parseInt(params.page) || 1,
+      _page: Number.parseInt(params.page) || 1,
+      _limit: Number.parseInt(params._limit) || 30,
+      category: params["category"],
     }
   }, [location.search])
-
 
   useEffect(() => {
     (
@@ -51,15 +59,26 @@ function PageProduct(props) {
     )(console.log("productList", productList));
   }, [queryParams])
 
+  const handleFiltersChange = (newFilters) => {
+    const filters = {
+      ...queryParams,
+      ...newFilters
+    }
+    history.push({
+      pathname: history.location.pathname,
+      search: queryString.stringify(filters)
+    })
+  };
 
   return (
     <Box>
       <Container>
         <CarouselIn />
-        <Grid container>
-          <Grid container item className={classes.left}>left</Grid>
-          <Grid container item className={classes.right}>
-            oc cho
+        <Grid container >
+          <Grid item className={classes.left}>
+            <ProductFilter filters={queryParams} onChange={handleFiltersChange} />
+          </Grid>
+          <Grid item className={classes.right}>
             <ProductList productList={productList} />
           </Grid>
         </Grid>

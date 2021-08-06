@@ -10,8 +10,8 @@ CarouselIn.propTypes = {
 
 function CarouselIn(props) {
   return (
-    <Box style={{ marginTop: 20, }}>
-      <Container>
+    <Box style={{ marginTop: 20, marginBottom: 18 }}>
+      <Container style={{ padding: 0 }}>
         <Carousel
           interval="2000"
           autoPlay="true"

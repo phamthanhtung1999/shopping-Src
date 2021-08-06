@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box } from '@material-ui/core';
-import { STATIC_HOST } from 'constants/common';
+
 import { THUMBNAIL_PLAYHOLDER } from 'constants/common';
 import {
   Magnifier,
@@ -15,7 +15,7 @@ ProductThumbnail.propTypes = {
 
 function ProductThumbnail({ product }) {
 
-  const thumbnailUrl = product.imagePath ? `${STATIC_HOST}${product.imagePath}` : `${THUMBNAIL_PLAYHOLDER}`;
+  const thumbnailUrl = product.imagePath ? `${product.imagePath}` : `${THUMBNAIL_PLAYHOLDER}`;
   return (
     <Box>
       < Magnifier

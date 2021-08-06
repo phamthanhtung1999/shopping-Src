@@ -3,9 +3,10 @@ import axiosClient from "./axiosClient";
 
 const categoriesApi = {
 
-  getAll(params) {
+  async getAll(params) {
     const url = '/categories';
-    return axiosClient.get(url, params);
+    const res = await axiosClient.get(url, params);
+    return res.data
   },
 
   add(data) {
