@@ -4,7 +4,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import CodeIcon from '@material-ui/icons/Code';
 import Login from 'features/Auth/components/login/index';
 import Register from 'features/Auth/components/register/index';
-
+import queryString from 'query-string'
 import { default as React, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useRouteMatch } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { ShoppingCart } from '../../../node_modules/@material-ui/icons/index';
 import DialogMigrate from 'components/DialogMigrate/index';
 import { logout } from 'features/Auth/userSlice';
 import { cartItemCountSelector } from 'features/Cart/Selector';
+import SearchField from 'components/Search';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,19 +79,27 @@ export default function AppHeader() {
   //   }
   // }
   const handleHomeClick = () => {
-    history.push(`/`)
+    history.push(`/products`)
   }
-
+  const handleSearchSubmit = (values) => {
+    const filters = {
+      name: values,
+    }
+    console.log(filters);
+    history.push({
+      pathname: history.location.pathname,
+      search: queryString.stringify(filters)
+    })
+  }
 
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{ backgroundColor: '#303030' }}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            <Typography className={classes.link} to="/">
-              Shopping
-            </Typography>
+            Shopping
           </Typography>
+          <SearchField onSubmit={handleSearchSubmit} />
           <Box>
             <Button className={classes.home} onClick={handleHomeClick}>Sản Phẩm</Button>
           </Box>
