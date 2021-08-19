@@ -1,0 +1,46 @@
+<div
+  class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 class="h2">Orders</h1>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th class="px-3 py-2" scope="col">#</th>
+        <th class="px-3 py-2" scope="col">Customer Name</th>
+        <th class="px-3 py-2" scope="col">Customer Phone</th>
+        <th class="px-3 py-2" scope="col">Status</th>
+        <th class="px-3 py-2" scope="col">Created At</th>
+        <th class="px-3 py-2" scope="col">Updated At</th>
+        <th class="px-3 py-2" scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data}}
+      <tr>
+        <td class="px-3 py-2">{{ sum @index 1 }}</td>
+        <td class="px-3 py-2">{{ concat this.user.firstName this.user.lastName }}</td>
+        <td class="px-3 py-2">{{ this.user.phone }}</td>
+        <td class="px-3 py-2 text-{{ findStatus ../orderStatusColor this.status }}">{{ findStatus ../orderStatuses this.status }}</td>
+        <td class="px-3 py-2">{{ datetimeFormat this.createdAt 'YYYY-MM-DD HH:mm:ss' }}</td>
+        <td class="px-3 py-2">{{ datetimeFormat this.updatedAt 'YYYY-MM-DD HH:mm:ss' }}</td>
+        <td class="px-3 py-2">
+          <a href="/orders/{{ this._id }}" class="btn btn-secondary">Detail</a>
+        </td>
+      </tr>
+      {{/each }}
+    </tbody>
+  </table>
+  <div>
+    {{#if (not_equal currentPage 1)}}
+    <span>1</span>
+    {{/if}}
+    {{#if (not_equal 1 lastPage)}}
+    <span class="text-success">{{ currentPage }}</span>
+    {{/if}}    
+    {{#if (not_equal currentPage lastPage)}}
+    <span>{{ lastPage }}</span>
+    {{/if}}
+  </div>
+</div>

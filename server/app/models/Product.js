@@ -29,6 +29,12 @@ const productSchema = Schema(
       type: Schema.Types.ObjectId,
       ref: "Category",
     },
+    discounts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Discount",
+      }
+    ]
   },
   {
     timestamps: true,

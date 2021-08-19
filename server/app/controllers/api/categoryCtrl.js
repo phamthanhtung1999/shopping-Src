@@ -1,4 +1,4 @@
-import { getAll } from "../repositories/categoryRepo.js";
+import { getAll } from "../../repositories/categoryRepo.js";
 
 export const getAllCategory = async (req, res) => {
     try {

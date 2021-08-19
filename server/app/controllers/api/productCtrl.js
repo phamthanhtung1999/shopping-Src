@@ -1,5 +1,5 @@
-import { searchCategoryByName } from "../repositories/categoryRepo.js";
-import { getProductBySlug, getPaginatedList } from "../repositories/productRepo.js";
+import { searchCategoryByName } from "../../repositories/categoryRepo.js";
+import { getProductBySlug, getPaginatedList } from "../../repositories/productRepo.js";
 
 export const getProducts = async (req, res) => {
     let page = parseInt(req.query.page);

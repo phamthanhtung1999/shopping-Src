@@ -39,6 +39,16 @@ export const getProductById = async (id) => {
     return product;
 }
 
+export const getProductWithDiscount = async (ids) => {
+    try {
+        const products = await Product.find({ _id: { $in: ids } }).populate({ path: 'discounts' });
+
+        return products;
+    } catch (error) {
+        return { error: true, message: "Invalid product ID" }
+    }
+}
+
 export const updateProduct = async (id, data) => {
     try {
         const model = await Product.updateOne({_id: id}, data);

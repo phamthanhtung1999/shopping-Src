@@ -1,7 +1,6 @@
-import { APP_KEY } from "../../config/app.js";
-import { generateToken } from "../helpers/tokenHelper.js";
-import User from "../models/User.js";
-import { authenticate } from "../repositories/userRepo.js";
+import { generateToken } from "../../helpers/tokenHelper.js";
+import User from "../../models/User.js";
+import { authenticate } from "../../repositories/userRepo.js";
 import bcrypt from "bcrypt";
 
 export const login = async (req, res) => {

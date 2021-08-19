@@ -39,7 +39,7 @@ export const userRestrict = async (req, res, next) => {
 
     try {
         const { email } = verifyToken(token);
-        req.user = getUserByEmail(email);
+        req.user = await getUserByEmail(email);
         next();
     } catch (error) {
         res.status(401).json({ message: "Authentication Fail!" });

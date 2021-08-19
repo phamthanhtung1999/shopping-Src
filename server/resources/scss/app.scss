@@ -2,7 +2,85 @@
 @import "layouts";
 
 .not-found-ctn {
-    font-size: 25px;
-    width: 100%;
-    height: calc(100vh - 48px);
+  font-size: 25px;
+  width: 100%;
+  height: calc(100vh - 48px);
+}
+
+.login-form {
+  box-shadow: 3px 3px 3px #c4c4c2;
+  border-radius: 5px;
+  width: 300px;
+  background-color: #edebe6;
+  border: 1px solid #ededed;
+  .login-header {
+    border-radius: 5px 5px 0 0;
+    padding: 10px;
+    font-size: 30px;
+    background: linear-gradient(35deg, #ffff00, #0000ff);
+    border-bottom: 1px solid #666;
+  }
+  .login-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    .form-control {
+      margin-bottom: 5px;
+      input {
+        font-size: 15px;
+        width: 250px;
+        padding: 3px;
+      }
+      button {
+        font-size: 17px;
+        background-color: rgb(44, 134, 236);
+        border-radius: 5px;
+        color: #ffffff;
+        margin-top: 5px;
+        padding: 3px 5px;
+      }
+    }
+  }
+}
+
+.model-id {
+  font-size: 0.75rem;
+  color: #636161;
+  margin-left: 10px;
+}
+
+.order-detail {
+  .box {
+    border-radius: 4px;
+    box-shadow: 5px 5px 5px 5px #ebebeb;
+    padding: 7px 10px;
+    margin-bottom: 20px;
+    position: relative;
+    .title {
+      margin-top: 7px;
+      padding: 5px;
+      font-size: 1.5rem;
+      border-bottom: 1px solid #ebebeb;
+      margin-bottom: 10px;      
+    }
+    .id-tag {
+      position: absolute;
+      top: -10px;
+      left: -7px;
+      background-color: #6d6dcf;
+      border-radius: 5px;
+      margin-right: 5px;
+      padding: 5px;
+      font-size: 0.75rem;
+      color: white;
+    }
+    .row {
+      padding-left: 20px;
+      .label {
+        font-weight: 800;
+      }
+    }
+  }  
 }

@@ -58,7 +58,10 @@ app.engine('hbs', hbs({
     datetimeFormat: (datetime, format) => moment(datetime).format(format),
     currency: (number) => new Intl.NumberFormat().format(number),
     equal: (a, b) =>  a.equals(b),
+    not_equal: (a, b) => a != b,
     concat: (a, b) => a + ' ' + b,
+    findStatus: (array, needle) => array[needle],
+    discount: (discount, price) => price * (1 - discount),
   }
 }));
 app.set('view engine', 'hbs');
