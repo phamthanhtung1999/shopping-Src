@@ -1,5 +1,6 @@
-import { createOrder, getOrderById } from "../../repositories/orderRepo.js";
+import { createOrder, getOrderById, getProcessingOrderOfUser } from "../../repositories/orderRepo.js";
 import { getProductWithDiscount } from "../../repositories/productRepo.js";
+import { transform, transformList } from "../../transformers/order.js";
 
 export const create = async (req, res) => {
     try {
@@ -55,11 +56,23 @@ export const show = async (req, res) => {
     const { id } = req.params;
     const userId = req.user._id;
 
-    const order = await getOrderById(id, userId);
+    const result = await getOrderById(id, userId);
 
-    if (order) {
-        res.status(200).json(order);
+    if (result.error) {
+        res.status(404).json(result);
     } else {
-        res.status(500).json({ message: "Resource not found" });
+        res.status(200).json(transform(result));
+    }
+}
+
+export const list = async (req, res) => {
+    const userId = req.user._id;
+
+    const result = await getProcessingOrderOfUser(userId);
+
+    if (result.error) {
+        res.status(404).json(result);
+    } else {
+        res.status(200).json(transformList(result));
     }
 }
