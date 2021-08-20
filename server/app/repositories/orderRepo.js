@@ -2,7 +2,7 @@ import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import mongoose from "mongoose";
 import { ADMIN_PAGE_LIMIT } from "../../config/app.js";
-import { ORDER_DELIVERING, ORDER_PROCESSING } from "../../config/constants.js";
+import { ORDER_CANCELLED, ORDER_DELIVERING, ORDER_DONE, ORDER_PROCESSING } from "../../config/constants.js";
 
 export const createOrder = async (data, details) => {
   const session = await mongoose.startSession();
@@ -54,6 +54,17 @@ export const getProcessingOrderOfUser = async (userId) => {
   const orderStatus = [
     ORDER_PROCESSING,
     ORDER_DELIVERING
+  ]
+  return Order.find({ user: userId, status: { $in: orderStatus } })
+    .populate('details.product')
+    .then((result) => result)
+    .catch(() => ({ error: true, message: "Resource not found" }))
+}
+
+export const getOrderHistoryOfUser = async (userId) => {
+  const orderStatus = [
+    ORDER_DONE,
+    ORDER_CANCELLED
   ]
   return Order.find({ user: userId, status: { $in: orderStatus } })
     .populate('details.product')

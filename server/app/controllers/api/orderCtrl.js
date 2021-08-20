@@ -1,4 +1,4 @@
-import { createOrder, getOrderById, getProcessingOrderOfUser } from "../../repositories/orderRepo.js";
+import { createOrder, getOrderById, getProcessingOrderOfUser, getOrderHistoryOfUser } from "../../repositories/orderRepo.js";
 import { getProductWithDiscount } from "../../repositories/productRepo.js";
 import { transform, transformList } from "../../transformers/order.js";
 
@@ -69,6 +69,18 @@ export const list = async (req, res) => {
     const userId = req.user._id;
 
     const result = await getProcessingOrderOfUser(userId);
+
+    if (result.error) {
+        res.status(404).json(result);
+    } else {
+        res.status(200).json(transformList(result));
+    }
+}
+
+export const history = async (req, res) => {
+    const userId = req.user._id;
+
+    const result = await getOrderHistoryOfUser(userId);
 
     if (result.error) {
         res.status(404).json(result);
