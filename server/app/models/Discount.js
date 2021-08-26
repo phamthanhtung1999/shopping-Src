@@ -33,8 +33,11 @@ discountSchema.plugin(mongooseDelete, {
 });
 
 discountSchema.pre('validate', function(next) {
-  if (this.startDate && this.endDate && this.startDate > this.endDate) {
-      next(new Error('End Date must be greater than Start Date'));
+  const now = new Date();
+  if (this.startDate && this.startDate <= now) {
+      next(new Error('Start Date must be greater than now'));
+  } else if (this.startDate && this.endDate && this.startDate > this.endDate) {
+      next(new Error('End Date must be greater than or equals to Start Date'));
   } else {
       next();
   }

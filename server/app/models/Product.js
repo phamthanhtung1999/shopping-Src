@@ -29,12 +29,12 @@ const productSchema = Schema(
       type: Schema.Types.ObjectId,
       ref: "Category",
     },
-    discounts: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Discount",
-      }
-    ]
+    discount: {
+      type: Number,
+      default: 0,
+      max: 0.7,
+      min: 0,
+    }
   },
   {
     timestamps: true,

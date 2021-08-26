@@ -1,0 +1,12 @@
+.pagination {
+  .paginate-item {
+    padding: 6px 8px;
+    margin: 0 3px;
+    border-radius: 4px;
+    text-align: center;
+    &.active {
+      background-color: aqua;
+      color: white;
+    }
+  }
+}
