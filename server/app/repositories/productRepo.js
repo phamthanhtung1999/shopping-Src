@@ -51,7 +51,7 @@ export const getProductWithDiscount = async (ids) => {
 
 export const updateProduct = async (id, data) => {
     try {
-        const model = await Product.updateOne({_id: id}, data);
+        const model = await Product.updateOne({ _id: id }, data);
 
         return model;
     } catch (error) {
@@ -77,7 +77,7 @@ export const getPaginatedList = async (page, condition) => {
 
     const options = {
         page: page,
-        limit: 50,
+        limit: 16,
         select: ['name', 'stock', 'imagePath', 'unitPrice', 'slug']
     };
 

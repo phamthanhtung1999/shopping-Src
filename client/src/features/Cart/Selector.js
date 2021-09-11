@@ -10,7 +10,7 @@ export const cartItemCountSelector = createSelector(
 // calculate total
 export const cartTotalSelector = createSelector(
   cartItemSelector,
-  (cartItems) => cartItems.reduce((total, item) => total + item.product.salePrice * item.quantity, 0)
+  (cartItems) => cartItems.reduce((total, item) => total + item.product.unitPrice * item.quantity, 0)
 )
 //
 export const index = createSelector(

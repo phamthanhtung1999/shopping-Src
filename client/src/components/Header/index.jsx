@@ -71,13 +71,13 @@ export default function AppHeader() {
     dispatch(action);
   }
   const classes = useStyles();
-  // const handleShoppingCartClick = () => {
-  //   if (isLoggedIn) {
-  //     history.push(`/cart`)
-  //   } else {
-  //     alert("Vui lòng đăng nhập trước!")
-  //   }
-  // }
+  const handleShoppingCartClick = () => {
+    if (isLoggedIn) {
+      history.push(`/cart`)
+    } else {
+      alert("Vui lòng đăng nhập trước!")
+    }
+  }
   const handleHomeClick = () => {
     history.push(`/products`)
   }
@@ -108,7 +108,7 @@ export default function AppHeader() {
               badgeContent={cartItemCount}
               color="secondary">
               <ShoppingCart
-              // onClick={handleShoppingCartClick} 
+                onClick={handleShoppingCartClick}
               />
             </Badge>
           </IconButton>

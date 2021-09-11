@@ -5,10 +5,8 @@ const productApi = {
   async getAll(params) {
     // Transform _page to _start
     const newParams = { ...params };
-    newParams._start = !params._page || params._page <= 1 ? 0 : (params._page - 1) * (params._limit || 10);
+    // newParams._start = !params._page || params._page <= 1 ? 0 : (params._page - 1) * (params._limit || 10);
     // remove un-needed key
-    delete newParams._page
-
     // fetch product list + count
     const url = '/products';
     const productList = await axiosClient.get(url, { params: newParams });
@@ -17,8 +15,8 @@ const productApi = {
     return {
       data: productList,
       pagination: {
-        _page: params._page,
-        limit: params._limit,
+        page: params.page,
+        limit: params.limit,
       }
     }
   },

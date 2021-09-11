@@ -37,7 +37,7 @@ function PageProduct(props) {
   const location = useLocation();
   const history = useHistory();
   const [pagination, setPagination] = useState({
-    limit: 50,
+    limit: 16,
     page: 1,
     totalDocs: 50,
   });
@@ -45,8 +45,8 @@ function PageProduct(props) {
     const params = queryString.parse(location.search)
     return {
       ...params,
-      _page: Number.parseInt(params.page) || 1,
-      _limit: Number.parseInt(params._limit) || 30,
+      page: Number.parseInt(params.page) || 1,
+      limit: Number.parseInt(params.limit) || 16,
       category: params["category"],
     }
   }, [location.search])
@@ -60,7 +60,7 @@ function PageProduct(props) {
           setPagination({
             limit: data.data.limit,
             page: data.data.page,
-            // pagingCounter: data.data.pagingCounter,
+            pagingCounter: data.data.pagingCounter,
             totalDocs: data.data.totalDocs,
           });
           console.log(data.data);
@@ -86,7 +86,7 @@ function PageProduct(props) {
   const handlePageChange = (e, page) => {
     const filters = {
       ...queryParams,
-      _page: page
+      page: page
     }
     history.push({
       pathname: history.location.pathname,
