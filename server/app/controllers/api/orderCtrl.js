@@ -58,10 +58,12 @@ export const show = async (req, res) => {
 
     const result = await getOrderById(id, userId);
 
+    const myHost = req.protocol + '://' + req.get('host');
+
     if (result.error) {
         res.status(404).json(result);
     } else {
-        res.status(200).json(transform(result));
+        res.status(200).json(transform(result, myHost));
     }
 }
 
