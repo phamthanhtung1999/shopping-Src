@@ -15,10 +15,9 @@ export const transformList = (orders) => {
 
                 return total + result;
             }, ""),
-            total_amt: new Intl.NumberFormat()
-                .format(order.details.reduce((total, current) => (
-                    total + current.unitPrice * current.quantity * (1 - current.discount)
-                ), 0)),
+            total_amt: order.details.reduce((total, current) => (
+                total + current.unitPrice * current.quantity * (1 - current.discount)
+            ), 0),
             created_at: order.createdAt
         }
     
@@ -37,16 +36,15 @@ export const transform = (order, host = '') => {
         status: order.status,
         details: order.details.map((detail) => ({
             quantity: detail.quantity,
-            unit_price: new Intl.NumberFormat().format(detail.unitPrice),
+            unit_price: detail.unitPrice,
             discount: detail.discount,
             product_id: detail.product._id,
             product_name: detail.product.name,
             image_path: host + "/" + detail.product.imagePath
         })),
-        total_amt: new Intl.NumberFormat()
-            .format(order.details.reduce((total, current) => (
-                total + current.unitPrice * current.quantity * (1 - current.discount)
-            ), 0)),
+        total_amt: order.details.reduce((total, current) => (
+            total + current.unitPrice * current.quantity * (1 - current.discount)
+        ), 0),
         created_at: order.createdAt
     }
 
