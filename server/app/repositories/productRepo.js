@@ -1,6 +1,4 @@
 import Product from "../models/Product.js";
-import path from "path";
-import fs from "fs";
 
 export const paginate = async (page, limit, conditions, select) => {
     const options = {
@@ -68,7 +66,7 @@ export const getProductBySlug = async (slug) => {
     return product
 }
 
-export const getPaginatedList = async (page, condition) => {
+export const getPaginatedList = async (page, limit, condition) => {
     const query = {
         deleted: false
     }
@@ -77,8 +75,8 @@ export const getPaginatedList = async (page, condition) => {
 
     const options = {
         page: page,
-        limit: 16,
-        select: ['name', 'stock', 'imagePath', 'unitPrice', 'slug']
+        limit: limit,
+        select: ['name', 'stock', 'imagePath', 'unitPrice', 'slug', 'discount'],
     };
 
     const products = await Product.paginate(query, options);

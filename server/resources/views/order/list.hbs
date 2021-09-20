@@ -32,15 +32,22 @@
       {{/each }}
     </tbody>
   </table>
-  <div>
+  <div class="pagination d-flex align-items-center justify-content-center">
+    {{#if hasPrev}}
+    <div class="paginate-item cursor"><a href="/products?page={{ sum currentPage -1 }}"> << </a></div>
+    {{/if}}
     {{#if (not_equal currentPage 1)}}
-    <span>1</span>
+    <div class="paginate-item cursor"><a href="/products">1</a></div>
     {{/if}}
     {{#if (not_equal 1 lastPage)}}
-    <span class="text-success">{{ currentPage }}</span>
-    {{/if}}    
+    <div class="paginate-item active">{{ currentPage }}</div>
+    {{/if}}
     {{#if (not_equal currentPage lastPage)}}
+    <div class="paginate-item cursor"><a href="/products?page={{ lastPage }}">{{ lastPage }}</a></div>
     <span>{{ lastPage }}</span>
+    {{/if}}
+    {{#if hasNext}}
+    <div class="paginate-item cursor"><a href="/products?page={{ sum currentPage 1 }}"> >> </a></div>
     {{/if}}
   </div>
 </div>

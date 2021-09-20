@@ -15,8 +15,9 @@
         <th class="px-3 py-2" scope="col">Name</th>
         <th class="px-3 py-2" scope="col">Unit Price</th>
         <th class="px-3 py-2" scope="col">Stock</th>
-        <th class="px-3 py-2" scope="col">Created At</th>
-        <th class="px-3 py-2" scope="col">Updated At</th>
+        <th class="px-3 py-2" scope="col">Current Discount</th>
+        <th class="px-3 py-2" scope="col">End Discount</th>
+        <th class="px-3 py-2" scope="col">Next Discount</th>
         <th class="px-3 py-2" scope="col"></th>
       </tr>
     </thead>
@@ -27,13 +28,35 @@
         <td class="px-3 py-2">{{ this.name }}</td>
         <td class="px-3 py-2">{{ currency this.unitPrice }}</td>
         <td class="px-3 py-2">{{ this.stock }}</td>
-        <td class="px-3 py-2">{{ datetimeFormat this.createdAt 'YYYY-MM-DD HH:mm:ss' }}</td>
-        <td class="px-3 py-2">{{ datetimeFormat this.updatedAt 'YYYY-MM-DD HH:mm:ss' }}</td>
+        <td class="px-3 py-2">{{ this.currentDiscount }}</td>
+        <td class="px-3 py-2">{{ datetimeFormat this.endDiscount 'YYYY-MM-DD' }}</td>
+        <td class="px-3 py-2">{{ this.nextDiscount }}</td>
         <td class="px-3 py-2">
           <a href="/products/{{this._id}}/edit" class="btn btn-secondary">Edit</a>
+          {{#if this.canDiscount}}
+          <a href="/products/{{this._id}}/discount" class="btn btn-primary">Discount</a>
+          {{/if}}
         </td>
       </tr>
       {{/each }}
     </tbody>
   </table>
+  <div class="pagination d-flex align-items-center justify-content-center">
+    {{#if hasPrev}}
+    <div class="paginate-item cursor"><a href="/products?page={{ sum currentPage -1 }}"> << </a></div>
+    {{/if}}
+    {{#if (not_equal currentPage 1)}}
+    <div class="paginate-item cursor"><a href="/products">1</a></div>
+    {{/if}}
+    {{#if (not_equal 1 lastPage)}}
+    <div class="paginate-item active">{{ currentPage }}</div>
+    {{/if}}
+    {{#if (not_equal currentPage lastPage)}}
+    <div class="paginate-item cursor"><a href="/products?page={{ lastPage }}">{{ lastPage }}</a></div>
+    <span>{{ lastPage }}</span>
+    {{/if}}
+    {{#if hasNext}}
+    <div class="paginate-item cursor"><a href="/products?page={{ sum currentPage 1 }}"> >> </a></div>
+    {{/if}}
+  </div>
 </div>
