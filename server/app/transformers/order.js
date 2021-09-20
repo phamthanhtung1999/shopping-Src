@@ -15,7 +15,11 @@ export const transformList = (orders) => {
 
                 return total + result;
             }, ""),
-            totalAmt: new Intl.NumberFormat().format(order.details.reduce((total, current) => (total + current.unitPrice * current.quantity * (1 - current.discount)), 0))
+            total_amt: new Intl.NumberFormat()
+                .format(order.details.reduce((total, current) => (
+                    total + current.unitPrice * current.quantity * (1 - current.discount)
+                ), 0)),
+            created_at: order.createdAt
         }
     
         return model;
@@ -24,7 +28,7 @@ export const transformList = (orders) => {
     return list;
 }
 
-export const transform = (order) => {
+export const transform = (order, host = '') => {
     const model = {
         id: order._id,
         receiver_name: order.receiverName,
@@ -36,9 +40,14 @@ export const transform = (order) => {
             unit_price: new Intl.NumberFormat().format(detail.unitPrice),
             discount: detail.discount,
             product_id: detail.product._id,
-            product_name: detail.product.name
+            product_name: detail.product.name,
+            image_path: host + "/" + detail.product.imagePath
         })),
-        totalAmt: new Intl.NumberFormat().format(order.details.reduce((total, current) => (total + current.unitPrice * current.quantity * (1 - current.discount)), 0))
+        total_amt: new Intl.NumberFormat()
+            .format(order.details.reduce((total, current) => (
+                total + current.unitPrice * current.quantity * (1 - current.discount)
+            ), 0)),
+        created_at: order.createdAt
     }
 
     return model;
