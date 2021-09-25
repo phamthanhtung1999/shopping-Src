@@ -8,9 +8,9 @@ Footer.propTypes = {
 
 function Footer(props) {
   return (
-    <Box className='footer' style={{ marginTop: '60px', padding: '30px', backgroundColor: '#303030' }}>
+    <Box className='footer' style={{ padding: '30px', backgroundColor: '#303030' }}>
       <Container>
-        <Grid Container>
+        <Grid >
           <Grid item style={{ textAlign: "center" }}>
             <Typography variant='h4' style={{ fontWeight: 'bold', color: 'white' }} > {`Shopping`}</Typography>
           </Grid>

@@ -1,5 +1,6 @@
 import NotFound from "components/NotFound";
 import CartFeature from "features/Cart";
+import Orders from "features/Orders";
 
 import ProductFeature from "features/products";
 import { Route, Switch } from "react-router-dom";
@@ -16,6 +17,7 @@ function App() {
         <Route path='/' exact component={ProductFeature} />
         <Route path='/products' component={ProductFeature} />
         <Route path='/cart' component={CartFeature} />
+        <Route path='/orders' component={Orders} />
         <Route component={NotFound} />
       </Switch>
 
