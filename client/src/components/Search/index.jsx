@@ -66,15 +66,12 @@ function SearchField(props) {
   }
   return (
     <div
-      // onSubmit={handleSearchSubmit} 
       className={classes.search}>
-      <Button onClick={handleSearchSubmit}
+      <Button
         padding={0}
+        onClick={handleSearchSubmit}
       >
-        <IconButton className={classes.searchIcon}>
-          <SearchOutlined />
-        </IconButton>
-
+        <SearchOutlined />
       </Button>
       <InputBase
         placeholder="Search…"

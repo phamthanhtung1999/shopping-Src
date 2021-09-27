@@ -69,6 +69,7 @@ export default function AppHeader() {
     // dispatch(remove);
     const action = logout();
     dispatch(action);
+    setAnchorEl(null);
   }
   const classes = useStyles();
   const handleShoppingCartClick = () => {
@@ -80,6 +81,10 @@ export default function AppHeader() {
   }
   const handleHomeClick = () => {
     history.push(`/products`)
+  }
+  const handleOrderClick = () => {
+    history.push(`/orders`);
+    setAnchorEl(null);
   }
   const handleSearchSubmit = (values) => {
     const filters = {
@@ -140,6 +145,7 @@ export default function AppHeader() {
         onClose={handleCloseMenu}
       >
         <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
+        <MenuItem onClick={handleOrderClick}>My Orders</MenuItem>
         <MenuItem onClick={handleLogOut}>Logout</MenuItem>
       </Menu>
 
