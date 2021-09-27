@@ -31,6 +31,7 @@ function OrdDetails(props) {
   const { params: { orderId } } = useRouteMatch();
   const { order, loading } = useOrdDetailsApi(orderId);
   const classes = useStyle();
+  console.log('order', order);
 
   return (
     <Box>
