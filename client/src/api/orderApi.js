@@ -11,9 +11,9 @@ const orderApi = {
     const res = await axiosClient.get(url);
     return res
   },
-  async add(data) {
+  async add(details) {
     const url = '/orders';
-    return axiosClient.post(url, data);
+    return axiosClient.post(url, { "details": details });
   },
 }
 export default orderApi;

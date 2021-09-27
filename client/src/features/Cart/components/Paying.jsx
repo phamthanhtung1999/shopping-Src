@@ -13,7 +13,7 @@ Paying.propTypes = {
 function Paying({ props }) {
   const totalValue = useSelector(cartTotalSelector);
   const listItem = useSelector(cartItemSelector)
-  const itemFil = listItem.map((item) =>
+  const details = listItem.map((item) =>
   ({
     product_id: item.id,
     quantity: item.quantity
@@ -23,8 +23,10 @@ function Paying({ props }) {
     (
       async () => {
         try {
-          await orderApi.add(itemFil)
-          console.log("thanh cong order");
+          await orderApi.add(details)
+
+          console.log("thanh cong order", details);
+
         } catch (error) {
           console.log("fetch productlist fail", error);
         }

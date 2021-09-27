@@ -26,7 +26,7 @@ const useStyle = makeStyles((theme) => ({
 
 function ProductDecription({ product }) {
   const classes = useStyle();
-
+  console.log(product);
   return (
     <Box className={classes.root}>
       <Typography className={classes.description}>{product.description}</Typography>
