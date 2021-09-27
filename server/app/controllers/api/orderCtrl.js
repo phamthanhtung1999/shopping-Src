@@ -26,12 +26,7 @@ export const create = async (req, res) => {
                 quantity: e.quantity,
                 unitPrice: product.unitPrice,
                 product: product._id,
-            }
-            if (product.discounts.length > 0) {
-                const discount = product.discounts.find((el) => el.startDate <= Date.now() && el.endDate > Date.now());
-                if (discount) {
-                    item.discount = discount.discount;
-                }
+                discount: product.discount
             }
 
             details.push(item);
