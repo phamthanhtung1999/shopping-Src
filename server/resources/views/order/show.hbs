@@ -1,83 +1,118 @@
 <div
   class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
 >
-    <div>
-        <h1 class="h2">Order Detail</h1>
-        <div class="model-id">ID: {{ model._id }}</div>
-    </div>  
-  <a
-    href="/orders"
-    class="btn btn-sm btn-outline-secondary"
-  >Back to list</a>
+  <div>
+    <h1 class="h2">Order Detail</h1>
+    <div class="model-id">ID: {{model._id}}</div>
+  </div>
+  <div class="btn-group" role="group">
+      <form id='switch-state-form' action="/orders/{{ model._id }}/switch-status" method="post">
+      <input type="hidden" name="status" value="">
+    {{#if (not_equal ORDER_PROCESSING model.status)}}
+      <button type="button" class="btn btn-secondary btn-switch-state" data-target="{{ ORDER_PROCESSING }}">Processing</button>
+    {{/if}}
+    {{#if (not_equal ORDER_DELIVERING model.status)}}
+      <button type="button" class="btn btn-primary btn-switch-state" data-target="{{ ORDER_DELIVERING }}">Delivering</button>
+    {{/if}}
+    {{#if (not_equal ORDER_DONE model.status)}}
+      <button type="button" class="btn btn-success btn-switch-state" data-target="{{ ORDER_DONE }}">Done</button>
+    {{/if}}
+    {{#if (not_equal ORDER_CANCELLED model.status)}}
+      <button type="button" class="btn btn-danger btn-switch-state" data-target="{{ ORDER_CANCELLED }}">Cancel</button>
+    {{/if}}
+    </form>
+  </div>
+
+  <a href="/orders" class="btn btn-sm btn-outline-secondary">Back to list</a>
 </div>
 <div class="container order-detail">
-    <h2>Bill</h2>
-    <div class="box">
-        <div class="row mb-2">
-            <div class="col-12 col-md-3 label">Total items</div>
-            <div class="col-12 col-md-9">{{ totalItems }}</div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-12 col-md-3 label">Total income</div>
-            <div class="col-12 col-md-9">{{ currency totalIncome }}</div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-12 col-md-3 label">Status</div>
-            <div class="col-12 col-md-9 text-{{statusColor}}">{{ status }}</div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-12 col-md-3 label">Order Date</div>
-            <div class="col-12 col-md-9">{{ datetimeFormat model.createdAt 'YYYY-MM-DD HH:mm:ss' }}</div>
-        </div>
+  <h2>Bill</h2>
+  <div class="box">
+    <div class="row mb-2">
+      <div class="col-12 col-md-3 label">Total items</div>
+      <div class="col-12 col-md-9">{{totalItems}}</div>
     </div>
-    <h2>Information</h2>
-    <div class="box">
-        <div class="title">User Info</div>
-        <div class="row mb-2">
-            <div class="col-12 col-md-3 label">Name</div>
-            <div class="col-12 col-md-9">{{ concat model.user.firstName model.user.lastName }}</div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-12 col-md-3 label">Phone</div>
-            <div class="col-12 col-md-9">{{ model.user.phone }}</div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-12 col-md-3 label">Address</div>
-            <div class="col-12 col-md-9">{{ model.user.address }}</div>
-        </div>
+    <div class="row mb-2">
+      <div class="col-12 col-md-3 label">Total income</div>
+      <div class="col-12 col-md-9">{{currency totalIncome}}</div>
     </div>
-    <div class="box">
-        <div class="title">Receiver Info</div>
-        <div class="row mb-2">
-            <div class="col-12 col-md-3 label">Name</div>
-            <div class="col-12 col-md-9">{{ model.receiverName }}</div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-12 col-md-3 label">Phone</div>
-            <div class="col-12 col-md-9">{{ model.receiverPhone }}</div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-12 col-md-3 label">Address</div>
-            <div class="col-12 col-md-9">{{ model.receiverAddress }}</div>
-        </div>
+    <div class="row mb-2">
+      <div class="col-12 col-md-3 label">Status</div>
+      <div class="col-12 col-md-9 text-{{statusColor}}">{{status}}</div>
     </div>
-    <h2 class="mb-3">Details</h2>
-    {{#each model.details }}
-    <div class="box">
-        <div class="id-tag">{{ this._id }}</div>
-        <div class="title">{{ this.product.name }}</div>
-        <div class="row mb-2">
-            <div class="col-12 col-md-3 label">Quantity</div>
-            <div class="col-12 col-md-9">{{ this.quantity }}</div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-12 col-md-3 label">Unit Price</div>
-            <div class="col-12 col-md-9">{{ currency this.unitPrice }}</div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-12 col-md-3 label">Unit Price after Discount</div>
-            <div class="col-12 col-md-9">{{ currency (discount this.discount this.unitPrice) }}</div>
-        </div>
+    <div class="row mb-2">
+      <div class="col-12 col-md-3 label">Order Date</div>
+      <div class="col-12 col-md-9">{{datetimeFormat
+          model.createdAt
+          "YYYY-MM-DD HH:mm:ss"
+        }}</div>
     </div>
-    {{/each}}
+  </div>
+  <h2>Information</h2>
+  <div class="box">
+    <div class="title">User Info</div>
+    <div class="row mb-2">
+      <div class="col-12 col-md-3 label">Name</div>
+      <div class="col-12 col-md-9">{{concat
+          model.user.firstName
+          model.user.lastName
+        }}</div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-12 col-md-3 label">Phone</div>
+      <div class="col-12 col-md-9">{{model.user.phone}}</div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-12 col-md-3 label">Address</div>
+      <div class="col-12 col-md-9">{{model.user.address}}</div>
+    </div>
+  </div>
+  <div class="box">
+    <div class="title">Receiver Info</div>
+    <div class="row mb-2">
+      <div class="col-12 col-md-3 label">Name</div>
+      <div class="col-12 col-md-9">{{model.receiverName}}</div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-12 col-md-3 label">Phone</div>
+      <div class="col-12 col-md-9">{{model.receiverPhone}}</div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-12 col-md-3 label">Address</div>
+      <div class="col-12 col-md-9">{{model.receiverAddress}}</div>
+    </div>
+  </div>
+  <h2 class="mb-3">Details</h2>
+  {{#each model.details}}
+    <div class="box">
+      <div class="id-tag">{{this._id}}</div>
+      <div class="title">{{this.product.name}}</div>
+      <div class="row mb-2">
+        <div class="col-12 col-md-3 label">Quantity</div>
+        <div class="col-12 col-md-9">{{this.quantity}}</div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-12 col-md-3 label">Unit Price</div>
+        <div class="col-12 col-md-9">{{currency this.unitPrice}}</div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-12 col-md-3 label">Unit Price after Discount</div>
+        <div class="col-12 col-md-9">{{currency
+            (discount this.discount this.unitPrice)
+          }}</div>
+      </div>
+    </div>
+  {{/each}}
 </div>
+<script>
+    (function () {
+        const btnSubmits = document.getElementsByClassName('btn-switch-state');
+        const formEl = document.getElementById('switch-state-form');
+        for (let i = 0; i < btnSubmits.length; i++) {
+            btnSubmits[i].onclick = function (event) {
+                formEl.elements[0].value = event.target.dataset.target;
+                formEl.submit();
+            }
+        }
+    })();
+</script>

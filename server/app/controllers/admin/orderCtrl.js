@@ -3,7 +3,7 @@ import {
   mongooseToObj,
   multipleMongooseToObj,
 } from "../../helpers/mongooseHelper.js";
-import { paginate, orderDetail } from "../../repositories/orderRepo.js";
+import { paginate, orderDetail, switchOrderStatus } from "../../repositories/orderRepo.js";
 
 export const index = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -69,9 +69,37 @@ export const show = async (req, res) => {
       totalItems,
       totalIncome,
       status,
-      statusColor
+      statusColor,
+      ORDER_PROCESSING,
+      ORDER_DONE,
+      ORDER_DELIVERING,
+      ORDER_CANCELLED
     })
   } catch (error) {
     res.redirect('/orders')
   }  
+}
+
+export const switchStatus = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const status = req.body.status;
+    if (![
+      ORDER_CANCELLED,
+      ORDER_DELIVERING,
+      ORDER_DONE,
+      ORDER_PROCESSING
+    ].includes(status)) {
+      throw new Error('Invalid status.')
+    }
+    const update = await switchOrderStatus(id, status);
+
+    if (update) {
+      res.redirect(`/orders/${id}`)
+    } else {
+      throw new Error('Update status failure.')
+    }
+  } catch (error) {
+    res.redirect('/orders')
+  }
 }

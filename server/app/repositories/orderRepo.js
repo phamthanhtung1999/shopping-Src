@@ -8,6 +8,7 @@ import {
   ORDER_DONE,
   ORDER_PROCESSING,
 } from "../../config/constants.js";
+import moment from "moment";
 
 export const createOrder = async (data, details) => {
   // const session = await mongoose.startSession();
@@ -91,3 +92,57 @@ export const orderDetail = async (id) => {
 
   return order;
 };
+
+export const switchOrderStatus = async (id, status) => {
+  const result = await Order.findByIdAndUpdate(id, { status })
+
+  return result;
+}
+
+export const getOrdersForHomePage = async () => {
+  const today = new Date;
+  const thisMonth = today.getMonth();
+  const thisYear = today.getFullYear();
+  const startOfLastMonth = new Date(thisYear, thisMonth - 1, 1);
+  const endOfLastMonth = new Date(thisYear, thisMonth, 0);
+
+  const lastMonthOrders = await Order.where({
+    status: ORDER_DONE,
+    createdAt: { $gte: startOfLastMonth, $lte: endOfLastMonth }
+  });
+  let lastMonthIncome = 0;
+  for (let i = 0; i < lastMonthOrders.length; i++) {
+    let order = lastMonthOrders[i];
+    let income = 0;
+
+    for (let j = 0; j < order.details.length; j++) {
+      income += order.details[j].unitPrice * (1 - order.details[j].discount) * order.details[j].quantity;
+    }
+
+    lastMonthIncome += income;
+  }
+
+  const needActions = await Order.where({
+    status: { $in: [ORDER_PROCESSING, ORDER_DELIVERING] }
+  });
+
+  const deliveringCount = needActions.filter((order) => order.status == ORDER_DELIVERING).length;
+  const processingCount = needActions.filter((order) => order.status == ORDER_PROCESSING).length;
+  const doneCount = await Order.where({
+    status: ORDER_DONE,
+    createdAt: { $gte: startOfLastMonth, $lte: endOfLastMonth }
+  }).countDocuments();
+  const cancelledCount = await Order.where({
+    status: ORDER_CANCELLED,
+    createdAt: { $gte: startOfLastMonth, $lte: endOfLastMonth }
+  }).countDocuments();
+
+  return {
+    needActions,
+    deliveringCount,
+    processingCount,
+    doneCount,
+    cancelledCount,
+    lastMonthIncome
+  }
+}
