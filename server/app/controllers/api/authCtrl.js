@@ -59,3 +59,12 @@ export const logout = (req, res) => {
 
     res.status(203);
 }
+
+export const refresh = (req, res) => {
+    let user = req.user;
+    const token = generateToken(user.email);
+
+    res.json({
+        token: token
+    })
+}
