@@ -12,7 +12,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <SnackbarProvider anchorOrigin={{ vertical: "top", horizontal: 'right' }}>
+        <SnackbarProvider anchorOrigin={{ vertical: "top", horizontal: 'center' }}>
           <App />
         </SnackbarProvider>
       </BrowserRouter>

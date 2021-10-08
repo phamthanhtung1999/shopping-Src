@@ -8,6 +8,7 @@ import ProductThumbnail from '../components/ProductThumbnail';
 import ProductDecription from '../components/ProductDecription';
 import { addToCart } from 'features/Cart/CartSlice';
 import AddToCartForm from 'features/Cart/components/AddToCartForm';
+import { useSnackbar } from 'notistack/dist/index';
 
 DetailPage.propTypes = {
 
@@ -39,6 +40,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function DetailPage(props) {
+  const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
   const { params: { productSlug } } = useRouteMatch();
   const dispatch = useDispatch();
@@ -52,12 +54,14 @@ function DetailPage(props) {
 
 
   const handleAddToCartSubmit = ({ quantity }) => {
+
     const action = addToCart({
       id: product.id,
       product,
       quantity,
     });
     dispatch(action);
+    enqueueSnackbar("Thêm hàng vào giỏ thành công", { variant: "info" })
   }
   return (
     <Box>

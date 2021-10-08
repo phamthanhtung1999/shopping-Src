@@ -8,7 +8,7 @@ const userApi = {
       const res = await axiosClient.post(url, data)
       return res.data
     } catch (error) {
-      return error.response
+      return { ...error.response.data, error: true }
     }
   },
   async login(data) {

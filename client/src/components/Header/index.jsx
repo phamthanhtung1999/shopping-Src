@@ -5,7 +5,7 @@ import CodeIcon from '@material-ui/icons/Code';
 import Login from 'features/Auth/components/login/index';
 import Register from 'features/Auth/components/register/index';
 import queryString from 'query-string'
-import { default as React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { ShoppingCart } from '../../../node_modules/@material-ui/icons/index';
@@ -38,14 +38,43 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: `10px`,
     color: 'white',
     flexGrow: 1,
-
+    marginInline: theme.spacing(2),
+    "&:hover": {
+      backgroundColor: 'white',
+      color: "black",
+      transition: "all 0.5s"
+    }
+  },
+  cart: {
+    color: 'white',
+    marginRight: theme.spacing(2),
+    "&:hover": {
+      backgroundColor: 'white',
+      color: "black",
+      transition: "all 0.5s"
+    }
+  },
+  account: {
+    color: 'white',
+    borderRadius: `10px`,
+    "&:hover": {
+      backgroundColor: 'white',
+      color: "black",
+      transition: "all 0.5s"
+    }
   },
 }));
 
 export default function AppHeader() {
   const loggedInUser = useSelector(state => state.user.current)
-  const isLoggedIn = !!loggedInUser.email;
-  const [open, setOpen] = React.useState(false);
+  const [isLoggedIn, setIsloggedIn] = useState(false)
+  useEffect(() => {
+    const newLoginStatus = !!loggedInUser.email;
+    if (newLoginStatus !== isLoggedIn) {
+      setIsloggedIn(newLoginStatus)
+    }
+  }, [isLoggedIn])
+  const [open, setOpen] = useState(false);
   const [mode, setMode] = useState("login");
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
@@ -108,7 +137,7 @@ export default function AppHeader() {
           <Box>
             <Button className={classes.home} onClick={handleHomeClick}>Sản Phẩm</Button>
           </Box>
-          <IconButton aria-label="show 4 new mails" color="inherit">
+          <IconButton className={classes.cart} aria-label="show 4 new mails" color="inherit">
             <Badge
               badgeContent={cartItemCount}
               color="secondary">
@@ -117,14 +146,16 @@ export default function AppHeader() {
               />
             </Badge>
           </IconButton>
-          {isLoggedIn === false ? (
-            <Button color="inherit" onClick={handleClickOpen}>
-              Login
-            </Button>) : (
-            <Button color="inherit" onClick={handleUserClick}>
-              <AccountCircle />
-            </Button>
-          )}
+          <Box className={classes.account}>
+            {isLoggedIn === false ? (
+              <Button color="inherit" onClick={handleClickOpen}>
+                Login
+              </Button>) : (
+              <Button color="inherit" onClick={handleUserClick}>
+                <AccountCircle />
+              </Button>
+            )}
+          </Box>
         </Toolbar>
       </AppBar>
 

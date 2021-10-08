@@ -25,13 +25,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    "&:hover": {
+      border: "1px solid black",
+      backgroundColor: 'black',
+      color: 'white',
+      transition: "all 0.5s"
+    }
   },
   inputRoot: {
     color: 'inherit',
@@ -68,6 +67,7 @@ function SearchField(props) {
     <div
       className={classes.search}>
       <Button
+        className={classes.searchIcon}
         padding={0}
         onClick={handleSearchSubmit}
       >

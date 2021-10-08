@@ -16,9 +16,13 @@ function Login(props) {
     const action = login(values);
     const resultAction = await dispatch(action);
     const data = unwrapResult(resultAction);
-    if (data.error) {
+
+    if (!data.error) {
+      enqueueSnackbar("Login success", { variant: "success" })
+    } else {
       enqueueSnackbar(data.message, { variant: "error" })
     }
+
     //close dialog
     const { closeDialog } = props;
     if (closeDialog) {

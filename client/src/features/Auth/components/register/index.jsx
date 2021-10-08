@@ -15,20 +15,24 @@ function Register(props) {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const handleSubmit = async (values) => {
-    try {
-      const action = register(values)
-      const resultAction = await dispatch(action);
-      unwrapResult(resultAction);
-      // close dialog
-      const { closeDialog } = props;
-      if (closeDialog) {
-        closeDialog();
-      }
-      // do something here
-      enqueueSnackbar("Register is successfully", { variant: "success" })
-    } catch (error) {
-      enqueueSnackbar(error.message, { variant: "error" })
+
+    const action = register(values)
+    const resultAction = await dispatch(action);
+    const data = unwrapResult(resultAction);
+
+    if (!data.error) {
+      enqueueSnackbar("Login success", { variant: "success" })
+    } else {
+      enqueueSnackbar(data.message, { variant: "error" })
     }
+    // close dialog
+    const { closeDialog } = props;
+    if (closeDialog) {
+      closeDialog();
+    }
+    // do something here
+
+
   };
   return (
     <div>
