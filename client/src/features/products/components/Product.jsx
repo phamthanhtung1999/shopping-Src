@@ -20,7 +20,7 @@ function Product({ product }) {
   return (
     <Box padding={1} border="1px solid #80808040" margin={1} >
       <Box padding={1} onClick={handleClick} minHeight="215px">
-        <img src={thumbnailUrl} alt={product.name} width='100%' height='225px' />
+        <img src={thumbnailUrl} alt={product.name} width='100%' height='210px' />
       </Box>
       <Typography variant='body2'>{product.name}</Typography>
       <Typography variant='body2'>

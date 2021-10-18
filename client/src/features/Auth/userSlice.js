@@ -19,7 +19,7 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk(
   'users/login',
   async (payload) => {
-    // call api to register
+    // call api to login
     const data = await userApi.login(payload);
     if (data.error) {
       return data
