@@ -9,15 +9,15 @@ import { SnackbarProvider } from '../node_modules/notistack/dist/index';
 import store from 'app/store';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <SnackbarProvider anchorOrigin={{ vertical: "top", horizontal: 'center' }}>
-          <App />
-        </SnackbarProvider>
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
+
+  <Provider store={store}>
+    <BrowserRouter>
+      <SnackbarProvider anchorOrigin={{ vertical: "top", horizontal: 'center' }}>
+        <App />
+      </SnackbarProvider>
+    </BrowserRouter>
+  </Provider>,
+
   document.getElementById('root')
 );
 

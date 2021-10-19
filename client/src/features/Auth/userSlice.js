@@ -2,6 +2,8 @@ import userApi from 'api/userApi'
 import StorageKeys from 'constants/storage-keys';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
+
+
 export const register = createAsyncThunk(
   'users/register',
   async (payload) => {
@@ -27,7 +29,7 @@ export const login = createAsyncThunk(
     // luu vao localstorage
     localStorage.setItem(StorageKeys.TOKEN, data.token);
     localStorage.setItem(StorageKeys.USER, JSON.stringify(data.user));
-    return true;
+    return JSON.parse(localStorage.getItem(StorageKeys.USER)) || {}
   }
 )
 const userSlice = createSlice({

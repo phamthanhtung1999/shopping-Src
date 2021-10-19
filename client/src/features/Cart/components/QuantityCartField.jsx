@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   // }
 }))
 QuantityCartField.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
   name: PropTypes.string,
   quantity: PropTypes.number,
 };
@@ -39,7 +39,7 @@ function QuantityCartField({ quantity, name, id }) {
   const dispatch = useDispatch();
   const handlePlusQuantity = () => {
     const quantity = count + 1;
-    console.log(quantity);
+    console.log("id", id);
     const action = setQuantity(
       { id, quantity }
     )

@@ -67,21 +67,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AppHeader() {
 
-  // const loggedInUser = useSelector(state => state.user.current)
-  // console.log("loggedInUser", loggedInUser);
-  // const status = !!loggedInUser.email
-  // const [isLoggedIn, setIsLoggedIn] = useState(false)
-  // useEffect(() => {
-  //   try {
-  //     setIsLoggedIn(status)
-  //   } catch (error) {
-  //     console.log("fail to check statuslogin", error);
-  //   }
-  // }, [loggedInUser])
-  const logginUser = localStorage.getItem('user');
-  console.log("logginUser", logginUser);
-  const isLoggedIn = !!logginUser
-  console.log("checkLog", isLoggedIn);
+  const loggedInUser = useSelector(state => state.user.current)
+  console.log("loggedInUser", loggedInUser);
+  const status = !!loggedInUser.email
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  useEffect(() => {
+    setIsLoggedIn(status)
+  }, [loggedInUser])
+  // const logginUser = localStorage.getItem('user');
+  // console.log("logginUser", logginUser);
+  // const isLoggedIn = !!logginUser
+  // console.log("checkLog", isLoggedIn);
 
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState("login");

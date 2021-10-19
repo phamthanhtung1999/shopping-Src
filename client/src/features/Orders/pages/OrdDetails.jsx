@@ -6,7 +6,6 @@ import useOrdDetailsApi from '../hooks/useOrderDetails';
 import { Box, Container, makeStyles, Paper } from '@material-ui/core';
 import DetailsItem from '../components/DetailsItem';
 import UserInItem from '../components/UserInItem';
-import { useEffect } from 'react';
 import ListDetails from '../components/ListDetails';
 
 OrdDetails.propTypes = {

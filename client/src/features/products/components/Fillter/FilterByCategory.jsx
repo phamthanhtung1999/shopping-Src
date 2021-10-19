@@ -48,7 +48,7 @@ function FilterByCategory({ onChange }) {
       } catch (error) {
         console.log('fail to fetch category list');
       }
-      console.log(categoryList);
+
     })()
   }, []);
   const handleCategoryClick = (item) => {
